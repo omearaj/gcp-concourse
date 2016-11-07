@@ -90,7 +90,7 @@ jobs:
       trigger: true
       params:
         globs:
-        - "*pivotal"
+        - "*Elastic*"
   - task: wipe-env
     config:
       platform: linux

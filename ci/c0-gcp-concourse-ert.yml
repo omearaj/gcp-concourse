@@ -4,7 +4,7 @@ groups:
   jobs:
   - wipe-env
   - deploy-iaas
-  - config-opsman
+  - config-opsman-auth
   - deploy-director
   - upload-ert
   - deploy-ert
@@ -17,7 +17,7 @@ groups:
 - name: iaas
   jobs:
   - deploy-iaas
-  - config-opsman
+  - config-opsman-auth
   - deploy-director
 
 - name: ert
@@ -94,12 +94,12 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-opsmgr
-      trigger: false
+      trigger: true
       params:
         globs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
-      trigger: false
+      trigger: true
       params:
         globs:
         - "*pivotal"
@@ -122,17 +122,6 @@ jobs:
         gcp_zone_3: {{gcp_zone_3}}
         gcp_svc_acct_key: {{gcp_svc_acct_key}}
         gcp_terraform_prefix: {{gcp_terraform_prefix}}
-    on_success:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          concourse-success:-> {{pcf_iaas}} pipeline run has started https://flyjo.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME
-    on_failure:
-      put: slack-c0-coreteam
-      params:
-        text: |
-          concourse-fail:-> {{pcf_iaas}} https://flyjo.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
-
 - name: deploy-iaas
   serial: true
   max_in_flight: 1

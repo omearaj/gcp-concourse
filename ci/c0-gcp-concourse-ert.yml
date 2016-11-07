@@ -92,7 +92,7 @@ jobs:
   plan:
   - aggregate:
     - get: gcp-concourse
-      trigger: false
+      trigger: true
     - get: pivnet-opsmgr
       trigger: true
       params:

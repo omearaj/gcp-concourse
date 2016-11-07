@@ -5,9 +5,9 @@
         "name": "us-east1-b"
       },
       "other_availability_zones": [
-        { "name": "us-east1-b" },
-        { "name": "us-east1-c" },
-        { "name": "us-east1-d" }
+        { "name": "us-central1-a" },
+        { "name": "us-central1-b" },
+        { "name": "us-central1-c" }
       ],
       "network": {
         "name": "ert"
@@ -44,10 +44,10 @@
         "value": "disable"
       },
       ".cloud_controller.system_domain": {
-        "value": "sys.gcp.customer0.net"
+        "value": "system.piv-demo.com"
       },
       ".cloud_controller.apps_domain": {
-        "value": "cfapps.gcp.customer0.net"
+        "value": "apps.piv-demo.com"
       },
       ".cloud_controller.allow_app_ssh_access": {
         "value": true
@@ -106,7 +106,7 @@
       "collector": {"instance_type": {"id": "automatic"},"instances": 0,"elb_names": [],"internet_connected": false},
       "diego_database": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false,"persistent_disk":{"size_mb":"automatic"}},
       "diego_brain": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": ["tcp:c0-opsman-validation-ssh-proxy"],"internet_connected": false,"persistent_disk":{"size_mb":"automatic"}},
-      "diego_cell": {"instance_type": {"id": "automatic"},"instances": 12,"elb_names": [],"internet_connected": false},
+      "diego_cell": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false},
       "doppler": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false},
       "loggregator_trafficcontroller": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false},
       "tcp_router": {"instance_type": {"id": "automatic"},"instances": 3,"elb_names": [],"internet_connected": false,"persistent_disk":{"size_mb":"automatic"}},

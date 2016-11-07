@@ -48,7 +48,7 @@ resources:
 - name: gcp-concourse
   type: git
   source:
-    uri: git@github.com:c0-ops/gcp-concourse.git
+    uri: git@github.com:omearaj/gcp-concourse.git
     branch: master
     private_key: {{githubsshkey}}
 
@@ -94,12 +94,12 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       params:
         globs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       params:
         globs:
         - "*pivotal"
@@ -126,12 +126,12 @@ jobs:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-success:-> {{pcf_iaas}} pipeline run has started https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME
+          concourse-success:-> {{pcf_iaas}} pipeline run has started https://flyjo.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME
     on_failure:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-fail:-> {{pcf_iaas}} https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
+          concourse-fail:-> {{pcf_iaas}} https://flyjo.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
 
 - name: deploy-iaas
   serial: true
@@ -142,13 +142,13 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [wipe-env]
       params:
         globs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [wipe-env]
       params:
         globs:
@@ -220,13 +220,13 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [deploy-iaas]
       params:
         globs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [deploy-iaas]
       params:
         globs:
@@ -259,13 +259,13 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [config-opsman-auth]
       params:
         globs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [config-opsman-auth]
       params:
         globs:
@@ -301,13 +301,13 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [deploy-director]
       params:
         globs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [deploy-director]
       params:
         globs:
@@ -340,13 +340,13 @@ jobs:
     - get: gcp-concourse
       trigger: false
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [upload-ert]
       params:
         globs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [upload-ert]
       params:
         globs:
@@ -374,12 +374,12 @@ jobs:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-success:-> {{pcf_iaas}} ERT Has Deployed & Smoketests have completed https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
+          concourse-success:-> {{pcf_iaas}} ERT Has Deployed & Smoketests have completed https://flyjo.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME
     on_failure:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-fail:-> {{pcf_iaas}} https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
+          concourse-fail:-> {{pcf_iaas}} https://flyjo.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
 
 - name: run-cats
   serial: false
@@ -394,13 +394,13 @@ jobs:
         globs:
         - "om-linux"
     - get: pivnet-opsmgr
-      trigger: true
+      trigger: false
       passed: [deploy-ert]
       params:
         globs:
         - "*GCP*"
     - get: pivnet-elastic-runtime
-      trigger: true
+      trigger: false
       passed: [deploy-ert]
       params:
         globs:
@@ -427,4 +427,4 @@ jobs:
       put: slack-c0-coreteam
       params:
         text: |
-          concourse-fail:-> :deadpool: {{pcf_iaas}} https://fly.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
+          concourse-fail:-> :deadpool: {{pcf_iaas}} https://flyjo.customer0.net/teams/main/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME or https://fly.customer0.net/teams/main/pipelines/$BUILD_ID for more details
